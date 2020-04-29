@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import * as firebase from "firebase/app";
+import { Provider } from "react-redux";
+import Route from "./config/routes";
+import store from "./store";
+import LoadingPage from "./components/LoadingPage";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    firebase.auth().onAuthStateChanged((user) => {
+      user ? setAuthenticated(true) : setAuthenticated(false);
+      setLoading(false);
+    });
+  }, [authenticated]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      {loading ? <LoadingPage /> : <Route authenticated={authenticated} />}
+    </Provider>
   );
-}
+};
 
 export default App;
