@@ -9,12 +9,15 @@ import Loadable from "../components/Loadable";
 import ProtectedRoute from "./ProtectedRoute.js";
 
 const AsyncLogin = Loadable({ loader: () => import("../pages/Login") });
-// const AsyncForgetPassword = Loadable({
-//   loader: () => import("pages/ForgetPassword"),
-// });
-
+const AsyncForgetPassword = Loadable({
+  loader: () => import("../pages/ForgetPassword"),
+});
+const AsyncRegister = Loadable({
+  loader: () => import("../pages/RegisterNow"),
+});
 const AsyncHome = Loadable({ loader: () => import("../pages/Home") });
 const AsyncNoMatch = Loadable({ loader: () => import("../pages/NoMatch") });
+
 // const AsyncManage = Loadable({
 //   loader: () => import("pages/manage/userGroup"),
 // });
@@ -37,12 +40,19 @@ const Routes = ({ childProps, authenticated }) => {
       sidebar: () => null,
       main: AsyncLogin,
     },
-    // {
-    //   path: '/forget',
-    //   exact: true,
-    //   sidebar: () => null,
-    //   main: AsyncForgetPassword,
-    // },
+    {
+      path: "/forget",
+      exact: true,
+      sidebar: () => null,
+      main: AsyncForgetPassword,
+    },
+
+    {
+      path: "/register",
+      exact: true,
+      sidebar: () => null,
+      main: AsyncRegister,
+    },
     // {
     //   path: '/manageUser',
     //   exact: true,
@@ -68,7 +78,10 @@ const Routes = ({ childProps, authenticated }) => {
             ))}
 
             <Route
-              component={(props) => <AsyncNoMatch {...props} />}
+              component={(props) => {
+                console.log(props);
+                return <AsyncNoMatch {...props} />;
+              }}
               props={childProps}
             />
           </Switch>

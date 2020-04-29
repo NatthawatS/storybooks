@@ -1,5 +1,4 @@
-// import firebase from "firebase";
-import * as firebase from 'firebase/app';
+import firebase from "firebase/app";
 // Reducer
 const config = {
   apiKey: "AIzaSyDYw4nW7k_QpBZjoF1fjHfwI0RPGTfw0qU",

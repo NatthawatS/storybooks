@@ -5,7 +5,7 @@ import { Form, Input, Button, notification } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useHistory, useLocation } from "react-router-dom";
 
-const Login = () => {
+const RegisterNow = () => {
   const [submitting, setSubmitting] = useState(false);
   const history = useHistory();
   const location = useLocation();
@@ -18,7 +18,7 @@ const Login = () => {
         setSubmitting(true);
         firebase
           .auth()
-          .signInWithEmailAndPassword(values.username, values.password)
+          .createUserWithEmailAndPassword(values.username, values.password)
           .then(async () => {
             setSubmitting(false);
             const parsed = queryString.parse(location.search);
@@ -51,6 +51,7 @@ const Login = () => {
       initialValues={{ remember: true }}
       onFinish={onFinish}
     >
+      <div>RegisterNow</div>
       <Form.Item
         name="username"
         rules={[{ required: true, message: "Please input your Username!" }]}
@@ -70,15 +71,6 @@ const Login = () => {
           placeholder="Password"
         />
       </Form.Item>
-      <Form.Item>
-        <Button
-          type="primary"
-          className="login-form-button"
-          onClick={() => history.push("/forget")}
-        >
-          Forgot password
-        </Button>
-      </Form.Item>
 
       <Form.Item>
         <Button
@@ -87,18 +79,11 @@ const Login = () => {
           className="login-form-button"
           loading={submitting}
         >
-          Log in
-        </Button>
-        <Button
-          type="primary"
-          className="login-form-button"
-          onClick={() => history.push("/register")}
-        >
-          registern now
+          RegisterNow
         </Button>
       </Form.Item>
     </Form>
   );
 };
 
-export default Login;
+export default RegisterNow;
