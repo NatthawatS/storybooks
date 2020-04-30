@@ -1,0 +1,180 @@
+.logo {
+  float: left;
+  margin: 11px 0;
+}
+
+.ant-back-top {
+  right: 20px;
+}
+
+.ant-menu-horizontal.main-nav > .ant-menu-item:hover,
+.ant-menu-horizontal.main-nav > .ant-menu-submenu:hover,
+.ant-menu-horizontal.main-nav > .ant-menu-item-active,
+.ant-menu-horizontal.main-nav > .ant-menu-submenu-active,
+.ant-menu-horizontal.main-nav > .ant-menu-item-open,
+.ant-menu-horizontal.main-nav > .ant-menu-submenu-open,
+.ant-menu-horizontal.main-nav > .ant-menu-item-selected,
+.ant-menu-horizontal.main-nav > .ant-menu-submenu-selected {
+  border-bottom: 2px solid #cb6c27;
+  color: #cb6c27;
+}
+.ant-menu-horizontal.main-nav > .ant-menu-submenu > .ant-menu-item:hover,
+.ant-menu-horizontal.main-nav > .ant-menu-submenu > .ant-menu-item-active,
+.ant-menu-horizontal.main-nav
+  > .ant-menu-submenu
+  > .ant-menu:not(.ant-menu-inline)
+  .ant-menu-submenu-open,
+.ant-menu-horizontal.main-nav > .ant-menu-submenu > .ant-menu-submenu-active,
+.ant-menu-horizontal.main-nav
+  > .ant-menu-submenu
+  > .ant-menu-submenu-title:hover {
+  color: #cb6c27;
+}
+
+.ant-menu-submenu.main-nav > .ant-menu-item:active,
+.ant-menu-submenu.main-nav > .ant-menu-submenu-title:active {
+  background: #ffe6be;
+  color: #cb6c27;
+}
+
+.ant-menu-submenu-vertical.main-nav
+  > .ant-menu-submenu-title:hover
+  .ant-menu-submenu-arrow:after,
+.ant-menu-submenu-vertical-left.main-nav
+  > .ant-menu-submenu-title:hover
+  .ant-menu-submenu-arrow:after,
+.ant-menu-submenu-vertical-right.main-nav
+  > .ant-menu-submenu-title:hover
+  .ant-menu-submenu-arrow:after,
+.ant-menu-submenu-inline.main-nav
+  > .ant-menu-submenu-title:hover
+  .ant-menu-submenu-arrow:after,
+.ant-menu-submenu-vertical.main-nav
+  > .ant-menu-submenu-title:hover
+  .ant-menu-submenu-arrow:before,
+.ant-menu-submenu-vertical-left.main-nav
+  > .ant-menu-submenu-title:hover
+  .ant-menu-submenu-arrow:before,
+.ant-menu-submenu-vertical-right.main-nav
+  > .ant-menu-submenu-title:hover
+  .ant-menu-submenu-arrow:before,
+.ant-menu-submenu-inline.main-nav
+  > .ant-menu-submenu-title:hover
+  .ant-menu-submenu-arrow:before {
+  background: linear-gradient(to right, #cb6c27, #cb6c27);
+  color: #cb6c27;
+}
+
+.ant-menu-submenu.main-nav > .ant-menu-item:hover,
+.ant-menu-submenu.main-nav > .ant-menu-item-active,
+.ant-menu-submenu.main-nav
+  > .ant-menu:not(.ant-menu-inline)
+  .ant-menu-submenu-open,
+/* .ant-menu-submenu.main-nav > .ant-menu-submenu-title, */
+.ant-menu-submenu.main-nav > .ant-menu-submenu-active,
+.ant-menu-submenu.main-nav > .ant-menu-submenu-title:hover {
+  color: #cb6c27;
+}
+
+.ant-menu-item.main-nav:hover,
+.ant-menu-item-active.main-nav,
+.ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open.main-nav,
+.ant-menu-submenu-active.main-nav,
+.ant-menu-submenu-title.main-nav:hover {
+  color: #cb6c27;
+}
+
+.ant-menu-item.main-nav > a:hover {
+  color: #cb6c27;
+}
+
+.ant-menu-item.main-nav:active,
+.ant-menu-submenu-title.main-nav:active {
+  background: #ffe6be;
+}
+
+.ant-menu-horizontal {
+  line-height: 64px;
+  border: 0px;
+}
+
+.ant-menu-horizontal#main-menu {
+  float: left;
+}
+
+.ant-menu-horizontal#user-menu {
+  text-align: right;
+  float: right;
+}
+
+.ant-menu-horizontal#user-menu-mobile {
+  width: 100%;
+  text-align: right;
+  border-bottom: 10px solid #e3792d;
+}
+
+.ant-menu-inline.main-nav {
+  border-right: none;
+}
+
+/* .ant-drawer-body#nav {
+  padding: 0px
+} */
+
+/* xs */
+@media screen and (min-width: 0px) and (max-width: 575px) {
+}
+/* sm */
+@media screen and (min-width: 576px) and (max-width: 767px) {
+}
+/* md */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .ant-menu-horizontal#main-menu {
+    width: 50%;
+  }
+
+  .ant-menu-horizontal#user-menu {
+    width: 26%;
+  }
+}
+/* lg */
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .ant-menu-horizontal#main-menu {
+    width: 63%;
+  }
+
+  .ant-menu-horizontal#user-menu {
+    width: 20%;
+  }
+}
+/* 1280 */
+@media screen and (min-width: 1200px) and (max-width: 1365px) {
+  .ant-menu-horizontal#main-menu {
+    width: 65%;
+  }
+
+  .ant-menu-horizontal#user-menu {
+    width: 16%;
+  }
+}
+
+/* xl */
+@media screen and (min-width: 1366px) and (max-width: 1599px) {
+  .ant-menu-horizontal#main-menu {
+    width: 70%;
+  }
+
+  .ant-menu-horizontal#user-menu {
+    width: 16%;
+  }
+}
+/* xxl */
+@media screen and (min-width: 1600px) {
+  .ant-menu-horizontal#main-menu {
+    width: 70%;
+  }
+
+  .ant-menu-horizontal#user-menu {
+    width: 16%;
+  }
+}

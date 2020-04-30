@@ -4,7 +4,6 @@ import { Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { Layout } from "antd";
 import ScrollToTop from "../components/ScrollToTop";
-// import { userIsAuthenticated as userIsAuthenticatedRedir } from '../auth';
 import Loadable from "../components/Loadable";
 import ProtectedRoute from "./ProtectedRoute.js";
 
@@ -17,10 +16,12 @@ const AsyncRegister = Loadable({
 });
 const AsyncHome = Loadable({ loader: () => import("../pages/Home") });
 const AsyncNoMatch = Loadable({ loader: () => import("../pages/NoMatch") });
-
-// const AsyncManage = Loadable({
-//   loader: () => import("pages/manage/userGroup"),
-// });
+const AsyncAddNewBook = Loadable({
+  loader: () => import("../pages/AddNewBook"),
+});
+const AsyncBorrowBooks = Loadable({
+  loader: () => import("../pages/BorrowBooks"),
+});
 
 const history = createBrowserHistory();
 
@@ -53,14 +54,28 @@ const Routes = ({ childProps, authenticated }) => {
       sidebar: () => null,
       main: AsyncRegister,
     },
-    // {
-    //   path: '/manageUser',
-    //   exact: true,
-    //   sidebar: () => null,
-    //   main: () => (
-    //     <ProtectedRoute component={AsyncManage} authenticated={authenticated} />
-    //   ),
-    // },
+    {
+      path: "/addNewBook",
+      exact: true,
+      sidebar: () => null,
+      main: () => (
+        <ProtectedRoute
+          component={AsyncAddNewBook}
+          authenticated={authenticated}
+        />
+      ),
+    },
+    {
+      path: "/borrowBooks",
+      exact: true,
+      sidebar: () => null,
+      main: () => (
+        <ProtectedRoute
+          component={AsyncBorrowBooks}
+          authenticated={authenticated}
+        />
+      ),
+    },
   ];
 
   return (
