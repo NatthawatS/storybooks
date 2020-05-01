@@ -80,26 +80,45 @@ const Home = () => {
   const arrBooking = useSelector((state) => state.booking.book);
   console.log(arrBooking);
   useEffect(() => {
-    if (dataFirebase.length === 0) {
-      setLoading(true);
-      const db = firebase.firestore();
-      db.collection("library")
-        .get()
-        .then((snapshot) => {
-          const data = snapshot.docs.map((doc) => {
-            const key = { key: doc.id };
-            const allRules = { ...key, ...doc.data() };
-            return allRules;
-          });
-          setFirebase(data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log("Error!", error);
-          setLoading(false);
+    setLoading(true);
+    const db = firebase.firestore();
+    db.collection("library")
+      .get()
+      .then((snapshot) => {
+        const data = snapshot.docs.map((doc) => {
+          const result = { ...{ key: doc.id }, ...doc.data() };
+          return result;
         });
-    }
-  }, [dataFirebase]);
+        setFirebase(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log("Error!", error);
+      });
+  }, [selectedRowKeys]);
+
+  // useEffect(() => {
+  //   if (dataFirebase.length === 0) {
+  //     setLoading(true);
+  //     const db = firebase.firestore();
+  //     db.collection("library")
+  //       .get()
+  //       .then((snapshot) => {
+  //         const data = snapshot.docs.map((doc) => {
+  //           const key = { key: doc.id };
+  //           const allRules = { ...key, ...doc.data() };
+  //           return allRules;
+  //         });
+  //         setFirebase(data);
+  //         setLoading(false);
+  //       })
+  //       .catch((error) => {
+  //         console.log("Error!", error);
+  //         setLoading(false);
+  //       });
+  //   }
+  // }, [dataFirebase]);
 
   const hasSelected = selectedRowKeys.length > 0;
 

@@ -74,7 +74,6 @@ const BorrowBooks = () => {
   const onFinish = () => {
     form
       .validateFields()
-
       .then(async (values) => {
         // console.log(moment(values.borrowdate[0]).format("DD-MM-YYYY"))
         // console.log(moment(values.borrowdate[1]).format("DD-MM-YYYY"))
@@ -92,8 +91,8 @@ const BorrowBooks = () => {
         await Promise.all(updateFiles).then(() => {
           console.log("loading");
           history.push("/");
+          form.resetFields();
           dispatch(clearBooking());
-
         });
       })
       .catch((info) => {

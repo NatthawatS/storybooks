@@ -49,7 +49,7 @@ const AddNewBook = () => {
           status: "Borrowed",
         });
         // form.resetFields();
-        history.push("/");
+        // history.push("/");
       })
       .catch((info) => {
         form.resetFields();
