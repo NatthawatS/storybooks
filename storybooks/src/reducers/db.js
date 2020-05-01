@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 // Reducer
+
 const config = {
   apiKey: "AIzaSyDYw4nW7k_QpBZjoF1fjHfwI0RPGTfw0qU",
   authDomain: "storage-storybook.firebaseapp.com",
