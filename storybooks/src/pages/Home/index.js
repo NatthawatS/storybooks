@@ -198,6 +198,9 @@ const Home = () => {
           className="table-ihg"
           rowSelection={{
             selectedRowKeys,
+            getCheckboxProps: (record) => ({
+              disabled: record.status === "Available",
+            }),
             onChange: (rowKeys, selectedRows) => {
               setSelectedRowKeys(rowKeys);
               setDataExport(selectedRows);

@@ -3,6 +3,9 @@ import firebase from "firebase/app";
 import { Form, Input, Button, notification, Modal } from "antd";
 import { MailOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
+import CardLayout from "../../components/layout/CardLayout";
+import { Container } from "../../components/Container";
+import "../../components/styleForm.css";
 
 const success = (history) => {
   Modal.success({
@@ -50,31 +53,47 @@ const ForgetPassword = () => {
   };
 
   return (
-    <Form
-      name="normal_login"
-      form={form}
-      className="login-form"
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-    >
-      <Form.Item
-        name="email"
-        rules={[{ required: true, message: "Please input your Email!" }]}
-      >
-        <Input prefix={<MailOutlined />} placeholder="Email" />
-      </Form.Item>
-
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="login-form-button"
-          loading={submitting}
+    <Container>
+      <CardLayout topic="Forgot password">
+        <span style={{ marginBottom: 10 }}>
+          Enter the email address you used when you joined
+        </span>
+        <Form
+          name="normal_login"
+          form={form}
+          className="login-form"
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
         >
-          Send
-        </Button>
-      </Form.Item>
-    </Form>
+          <Form.Item
+            name="email"
+            rules={[{ required: true, message: "Please input your Email!" }]}
+          >
+            <Input prefix={<MailOutlined />} placeholder="Email" />
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+              loading={submitting}
+              style={{
+                flex: 1,
+                display: "flex",
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#0076C2",
+                color: "#ffffff",
+              }}
+            >
+              Send
+            </Button>
+          </Form.Item>
+        </Form>
+      </CardLayout>
+    </Container>
   );
 };
 
