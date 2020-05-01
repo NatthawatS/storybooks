@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import firebase from "firebase/app";
 import queryString from "query-string";
-import { Form, Input, Button, notification } from "antd";
+import { Form, Input, Button, notification, Card, Row, Col } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useHistory, useLocation } from "react-router-dom";
+import CardLayout from "../../components/layout/CardLayout";
+import { Container } from "../../components/Container";
+import "../../components/styleForm.css";
+
+import logo from "../../components/home/logo.png";
 
 const Login = () => {
   const [submitting, setSubmitting] = useState(false);
@@ -44,60 +49,79 @@ const Login = () => {
   };
 
   return (
-    <Form
-      name="normal_login"
-      form={form}
-      className="login-form"
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-    >
-      <Form.Item
-        name="username"
-        rules={[{ required: true, message: "Please input your Username!" }]}
-      >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Username"
-        />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[{ required: true, message: "Please input your Password!" }]}
-      >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="Password"
-        />
-      </Form.Item>
-      <Form.Item>
-        <Button
-          type="primary"
-          className="login-form-button"
-          onClick={() => history.push("/forget")}
+    <Container>
+      <img src={logo} height="40" width="350" style={{ marginBottom: 30 }} />
+      <CardLayout topic="Sign in">
+        <Form
+          name="normal_login"
+          form={form}
+          className="login-form"
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          style={{ backgroundColor: "#ffffff" }}
         >
-          Forgot password
-        </Button>
-      </Form.Item>
-
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="login-form-button"
-          loading={submitting}
-        >
-          Log in
-        </Button>
-        <Button
-          type="primary"
-          className="login-form-button"
-          onClick={() => history.push("/register")}
-        >
-          registern now
-        </Button>
-      </Form.Item>
-    </Form>
+          <Form.Item
+            name="username"
+            rules={[{ required: true, message: "Please input your Username!" }]}
+          >
+            <Input
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              placeholder="Username"
+            />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[{ required: true, message: "Please input your Password!" }]}
+          >
+            <Input
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="Password"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+              loading={submitting}
+              style={{
+                flex: 1,
+                display: "flex",
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#0076C2",
+                color: "#ffffff",
+              }}
+            >
+              Sign in
+            </Button>
+          </Form.Item>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <div style={{ display: "flex", flex: 1 }}>
+              <a
+                style={{ color: "#0076C2" }}
+                onClick={() => history.push("/forget")}
+              >
+                Forgot password?
+              </a>
+            </div>
+            <div style={{ display: "flex", flex: 1 }}>
+              <div style={{ flexDirection: "row", display: "flex" }}>
+                <p>Not a member?</p>
+                <a
+                  style={{ color: "#0076C2" }}
+                  onClick={() => history.push("/register")}
+                >
+                  Sign up now
+                </a>
+              </div>
+            </div>
+          </div>
+        </Form>
+      </CardLayout>
+    </Container>
   );
 };
 

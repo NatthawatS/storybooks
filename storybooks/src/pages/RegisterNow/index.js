@@ -4,6 +4,9 @@ import queryString from "query-string";
 import { Form, Input, Button, notification } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useHistory, useLocation } from "react-router-dom";
+import CardLayout from "../../components/layout/CardLayout";
+import { Container } from "../../components/Container";
+import "../../components/styleForm.css";
 
 const RegisterNow = () => {
   const [submitting, setSubmitting] = useState(false);
@@ -22,6 +25,11 @@ const RegisterNow = () => {
           .then(async () => {
             setSubmitting(false);
             const parsed = queryString.parse(location.search);
+            notification["success"]({
+              message: "สำเร็จ !!",
+              description: "บันทึกข้อมูลเรียบร้อย",
+              duration: 3,
+            });
             history.push(parsed.redirect || "/");
           })
           .catch((error) => {
@@ -44,45 +52,57 @@ const RegisterNow = () => {
   };
 
   return (
-    <Form
-      name="normal_login"
-      form={form}
-      className="login-form"
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-    >
-      <div>RegisterNow</div>
-      <Form.Item
-        name="username"
-        rules={[{ required: true, message: "Please input your Username!" }]}
-      >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Username"
-        />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[{ required: true, message: "Please input your Password!" }]}
-      >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="Password"
-        />
-      </Form.Item>
-
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="login-form-button"
-          loading={submitting}
+    <Container>
+      <CardLayout topic="Sign up">
+        <Form
+          name="normal_login"
+          form={form}
+          className="login-form"
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
         >
-          RegisterNow
-        </Button>
-      </Form.Item>
-    </Form>
+          <Form.Item
+            name="username"
+            rules={[{ required: true, message: "Please input your Username!" }]}
+          >
+            <Input
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              placeholder="Username"
+            />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[{ required: true, message: "Please input your Password!" }]}
+          >
+            <Input
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="Password"
+            />
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+              loading={submitting}
+              style={{
+                flex: 1,
+                display: "flex",
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#0076C2",
+                color: "#ffffff",
+              }}
+            >
+              Sign up
+            </Button>
+          </Form.Item>
+        </Form>
+      </CardLayout>
+    </Container>
   );
 };
 

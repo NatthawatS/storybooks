@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import firebase from "firebase";
 import moment from "moment";
 import { Table, Button, Tag } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { changeSale } from "../../reducers/booking";
 import { useHistory } from "react-router-dom";
 import MainLayout from "../../components/layout/MainLayout";
 
-const columns = [
+const columns = (getReturn) => [
   {
     title: "ISBN (Book ID.)",
     dataIndex: "isbn",
@@ -50,16 +50,16 @@ const columns = [
     title: "Borrow Date",
     dataIndex: "startDate",
     align: "center",
-    render: (value, dataIndex) =>
+    render: (value, row) =>
       value && (
         <div>
-          {moment(value.seconds).format("DD-MM-YYYY")} to
-          {moment(dataIndex.endDate.seconds).format("DD-MM-YYYY")}
+          {value} to
+          {row.endDate}
         </div>
       ),
   },
   {
-    key: "status",
+    key: "Status",
     title: "status",
     dataIndex: "status",
     align: "center",
@@ -67,6 +67,42 @@ const columns = [
       value && (
         <Tag color={value === "Available" ? "green" : "red"}>{value}</Tag>
       ),
+  },
+  {
+    title: "Return",
+    align: "center",
+    dataIndex: "key",
+    width: 150,
+    key: "key",
+    render: (value, row) => {
+      return (
+        <div style={{ fontSize: "11px", textAlign: "center" }}>
+          {row.status === "Available" ? (
+            <Button
+              type="primary"
+              onClick={async () => {
+                const db = firebase.firestore();
+                db.collection("library")
+                  .doc(value)
+                  .update({
+                    status: "Borrowed",
+                    startDate: null,
+                    endDate: null,
+                  })
+                  .then(() => {
+                    getReturn();
+                  })
+                  .catch((e) => {
+                    console.log(e);
+                  });
+              }}
+            >
+              <CheckCircleOutlined />
+            </Button>
+          ) : null}
+        </div>
+      );
+    },
   },
 ];
 
@@ -79,27 +115,52 @@ const Home = () => {
   const history = useHistory();
   const arrBooking = useSelector((state) => state.booking.book);
   console.log(arrBooking);
+  console.log(dataFirebase);
   useEffect(() => {
-    if (dataFirebase.length === 0) {
-      setLoading(true);
-      const db = firebase.firestore();
-      db.collection("library")
-        .get()
-        .then((snapshot) => {
-          const data = snapshot.docs.map((doc) => {
-            const key = { key: doc.id };
-            const allRules = { ...key, ...doc.data() };
-            return allRules;
-          });
-          setFirebase(data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log("Error!", error);
-          setLoading(false);
+    setLoading(true);
+    const db = firebase.firestore();
+    db.collection("library")
+      .get()
+      .then((snapshot) => {
+        const data = snapshot.docs.map((doc) => {
+          const result = { ...{ key: doc.id }, ...doc.data() };
+          return result;
         });
-    }
-  }, [dataFirebase]);
+        setFirebase(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log("Error!", error);
+      });
+  }, [selectedRowKeys]);
+
+  // useEffect(() => {
+  //   if (dataFirebase.length === 0) {
+  //     setLoading(true);
+  //     const db = firebase.firestore();
+  //     db.collection("library")
+  //       .get()
+  //       .then((snapshot) => {
+  //         const data = snapshot.docs.map((doc) => {
+  //           const key = { key: doc.id };
+  //           const allRules = { ...key, ...doc.data() };
+  //           return allRules;
+  //         });
+  //         setFirebase(data);
+  //         setLoading(false);
+  //       })
+  //       .catch((error) => {
+  //         console.log("Error!", error);
+  //         setLoading(false);
+  //       });
+  //   }
+  // }, [dataFirebase]);
+  const getReturn = () => {
+    setDataExport([]);
+    setSelectedRowKeys([]);
+    setFirebase([]);
+  };
 
   const hasSelected = selectedRowKeys.length > 0;
 
@@ -179,12 +240,16 @@ const Home = () => {
           className="table-ihg"
           rowSelection={{
             selectedRowKeys,
+            getCheckboxProps: (record) => ({
+              disabled: record.status === "Available",
+            }),
             onChange: (rowKeys, selectedRows) => {
               setSelectedRowKeys(rowKeys);
               setDataExport(selectedRows);
             },
           }}
-          columns={columns}
+          // columns={columns}
+          columns={columns(getReturn)}
           dataSource={dataFirebase}
           scroll={{ x: "max-content" }}
           // pagination={false}
