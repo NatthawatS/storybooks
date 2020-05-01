@@ -3,12 +3,12 @@ import firebase from "firebase/app";
 
 
 const config = {
-  apiKey: "AIzaSyDYw4nW7k_QpBZjoF1fjHfwI0RPGTfw0qU",
-  authDomain: "storage-storybook.firebaseapp.com",
-  databaseURL: "https://storage-storybook.firebaseio.com",
-  projectId: "storage-storybook",
-  storageBucket: "storage-storybook.appspot.com",
-  messagingSenderId: "1063688389583",
+  // apiKey: "AIzaSyDYw4nW7k_QpBZjoF1fjHfwI0RPGTfw0qU",
+  // authDomain: "storage-storybook.firebaseapp.com",
+  // databaseURL: "https://storage-storybook.firebaseio.com",
+  // projectId: "storage-storybook",
+  // storageBucket: "storage-storybook.appspot.com",
+  // messagingSenderId: "1063688389583",
 };
 !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
 
