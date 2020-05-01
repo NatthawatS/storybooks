@@ -22,8 +22,6 @@ const AddNewBook = () => {
     form
       .validateFields()
       .then((values) => {
-        console.log(values);
-
         db.collection("library").add({
           bookTitle: values.title,
           isbn: values.isbn,
