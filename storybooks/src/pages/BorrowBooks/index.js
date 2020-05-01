@@ -50,7 +50,6 @@ const BorrowBooks = () => {
   const [dates, setDates] = useState([]);
   const arrBooking = useSelector((state) => state.booking.book);
 
-  // console.log(moment(dates[0]).format('DD-MM-YYYY'))
   const dispatch = useDispatch();
 
   const layout = {
@@ -61,7 +60,6 @@ const BorrowBooks = () => {
       span: 24,
     },
   };
-  // console.log(booking);
   const disabledDate = (current) => {
     if (!dates || dates.length === 0) {
       return false;
@@ -75,21 +73,18 @@ const BorrowBooks = () => {
     form
       .validateFields()
       .then(async (values) => {
-        // console.log(moment(values.borrowdate[0]).format("DD-MM-YYYY"))
-        // console.log(moment(values.borrowdate[1]).format("DD-MM-YYYY"))
         const db = firebase.firestore();
         const updateFiles = arrBooking.map((items) => {
           db.collection("library")
             .doc(items.key)
             .update({
-              status: "Available",
+              status: "Borrowed",
               startDate: moment(values.borrowdate[0]).format("DD-MM-YYYY"),
               endDate: moment(values.borrowdate[1]).format("DD-MM-YYYY"),
             });
         });
 
-        await Promise.all(updateFiles).then(() => {
-          console.log("loading");
+        return Promise.all(updateFiles).then(() => {
           history.push("/");
           form.resetFields();
           dispatch(clearBooking());
@@ -97,7 +92,6 @@ const BorrowBooks = () => {
       })
       .catch((info) => {
         form.resetFields();
-        // setSubmitting(true);
         console.log("Validate Failed:", info);
       });
   };
@@ -149,7 +143,6 @@ const BorrowBooks = () => {
               ]}
             >
               <RangePicker
-                // renderExtraFooter={() => "extra footer"}
                 disabledDate={disabledDate}
                 onCalendarChange={(value) => {
                   setDates(value);

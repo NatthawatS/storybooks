@@ -25,35 +25,23 @@ const AddNewBook = () => {
         console.log(values);
 
         db.collection("library").add({
-          // bookTitle: values.title,
-          // isbn: values.isbn,
-          // pages: values.pages,
-          // size: values.size,
-          // yearIssue: values.year,
-          // description: values.description,
-          // author: values.author,
-          // findTap: values.findTag,
-          // startDate: null,
-          // endDate: null,
-          // status: "Borrowed",
-          bookTitle: "ชุด ล่าขุมทรัพย์สุดขอบฟ้า",
-          isbn: "9786160447848",
-          pages: 160,
-          size: "14.5 X 19 X 0.8 CM",
-          yearIssue: 2563,
-          description: "เบ็คเดินทางมาแวนคูเวอร์เพื่อส่งโดเรมีเรียนภาษาแ",
-          author: "GOMDORI CO.",
-          findTap: "ปกอ่อน",
+          bookTitle: values.title,
+          isbn: values.isbn,
+          pages: values.pages,
+          size: values.size,
+          yearIssue: values.year,
+          description: values.description,
+          author: values.author,
+          findTag: values.findTag,
           startDate: null,
           endDate: null,
-          status: "Borrowed",
+          status: "Available",
         });
-        // form.resetFields();
-        // history.push("/");
+        form.resetFields();
+        history.push("/");
       })
       .catch((info) => {
         form.resetFields();
-        // setSubmitting(true);
         console.log("Validate Failed:", info);
       });
   };
@@ -63,7 +51,7 @@ const AddNewBook = () => {
       <Form.Item
         label={title}
         name={value}
-        // rules={[{ required: true, message: rulesMessage }]}
+        rules={[{ required: true, message: rulesMessage }]}
       >
         <Input />
       </Form.Item>
@@ -135,9 +123,9 @@ const AddNewBook = () => {
             <Form.Item
               label="Description"
               name="description"
-              // rules={[
-              //   { required: true, message: "Please input your Description!" },
-              // ]}
+              rules={[
+                { required: true, message: "Please input your Description!" },
+              ]}
             >
               <TextArea rows={4} />
             </Form.Item>

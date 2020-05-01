@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import firebase from "firebase";
-import moment from "moment";
 import { Table, Button, Tag } from "antd";
-import { PlusOutlined, CheckCircleOutlined } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  CheckCircleOutlined,
+  InteractionOutlined,
+  SafetyCertificateOutlined,
+} from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { changeSale } from "../../reducers/booking";
 import { useHistory } from "react-router-dom";
@@ -22,6 +26,39 @@ const columns = (getReturn) => [
     align: "center",
   },
   {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    align: "center",
+    filters: [
+      { text: "Available", value: true },
+      { text: "Borrowed", value: false },
+    ],
+    onFilter: (value, record) => {
+      console.log(value);
+      if (value === true) {
+        return record.status === "Available";
+      } else {
+        return record.status !== "Available";
+      }
+    },
+    render: (value) => {
+      if (value === "Available") {
+        return (
+          <Tag color="green">
+            Available <SafetyCertificateOutlined />
+          </Tag>
+        );
+      } else {
+        return (
+          <Tag color="red">
+            Borrowed <InteractionOutlined />
+          </Tag>
+        );
+      }
+    },
+  },
+  {
     key: "Author",
     title: "Author",
     dataIndex: "author",
@@ -34,10 +71,16 @@ const columns = (getReturn) => [
     align: "center",
   },
   {
-    key: "findTap",
-    title: "Find Tap",
-    dataIndex: "findTap",
+    key: "Find Tag",
+    title: "Find Tag",
+    dataIndex: "findTag",
     align: "center",
+    render: (value, row) =>
+      value && (
+        <div>
+          {value}( {row.pages} pages)
+        </div>
+      ),
   },
   {
     key: "size",
@@ -59,14 +102,10 @@ const columns = (getReturn) => [
       ),
   },
   {
-    key: "Status",
-    title: "status",
-    dataIndex: "status",
+    key: "description",
+    title: "Description",
+    dataIndex: "description",
     align: "center",
-    render: (value) =>
-      value && (
-        <Tag color={value === "Available" ? "green" : "red"}>{value}</Tag>
-      ),
   },
   {
     title: "Return",
@@ -77,7 +116,7 @@ const columns = (getReturn) => [
     render: (value, row) => {
       return (
         <div style={{ fontSize: "11px", textAlign: "center" }}>
-          {row.status === "Available" ? (
+          {row.status === "Borrowed" ? (
             <Button
               type="primary"
               onClick={async () => {
@@ -85,7 +124,7 @@ const columns = (getReturn) => [
                 db.collection("library")
                   .doc(value)
                   .update({
-                    status: "Borrowed",
+                    status: "Available",
                     startDate: null,
                     endDate: null,
                   })
@@ -115,7 +154,7 @@ const Home = () => {
   const history = useHistory();
   const arrBooking = useSelector((state) => state.booking.book);
   console.log(arrBooking);
-  console.log(dataFirebase);
+
   useEffect(() => {
     setLoading(true);
     const db = firebase.firestore();
@@ -135,27 +174,6 @@ const Home = () => {
       });
   }, [selectedRowKeys]);
 
-  // useEffect(() => {
-  //   if (dataFirebase.length === 0) {
-  //     setLoading(true);
-  //     const db = firebase.firestore();
-  //     db.collection("library")
-  //       .get()
-  //       .then((snapshot) => {
-  //         const data = snapshot.docs.map((doc) => {
-  //           const key = { key: doc.id };
-  //           const allRules = { ...key, ...doc.data() };
-  //           return allRules;
-  //         });
-  //         setFirebase(data);
-  //         setLoading(false);
-  //       })
-  //       .catch((error) => {
-  //         console.log("Error!", error);
-  //         setLoading(false);
-  //       });
-  //   }
-  // }, [dataFirebase]);
   const getReturn = () => {
     setDataExport([]);
     setSelectedRowKeys([]);
@@ -193,12 +211,9 @@ const Home = () => {
             const deleteFiles = dataExport.map((items) => {
               db.collection("library").doc(items.key).delete();
             });
-
             return Promise.all(deleteFiles)
               .then(() => {
-                setDataExport([]);
-                setSelectedRowKeys([]);
-                setFirebase([]);
+                getReturn();
               })
               .catch((e) => {
                 console.log(e);
@@ -232,7 +247,7 @@ const Home = () => {
             Selected {selectedRowKeys.length} items
           </span>
           <span style={{ marginLeft: 8 }}>
-            Total {dataFirebase.length} item
+            Total {dataFirebase.length} items
           </span>
         </div>
         <Table
@@ -241,18 +256,16 @@ const Home = () => {
           rowSelection={{
             selectedRowKeys,
             getCheckboxProps: (record) => ({
-              disabled: record.status === "Available",
+              disabled: record.status === "Borrowed",
             }),
             onChange: (rowKeys, selectedRows) => {
               setSelectedRowKeys(rowKeys);
               setDataExport(selectedRows);
             },
           }}
-          // columns={columns}
           columns={columns(getReturn)}
           dataSource={dataFirebase}
           scroll={{ x: "max-content" }}
-          // pagination={false}
           loading={loading}
           bordered
         />

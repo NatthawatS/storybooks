@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import firebase from "firebase/app";
 import queryString from "query-string";
-import { Form, Input, Button, notification, Card, Row, Col } from "antd";
+import { Form, Input, Button, notification } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useHistory, useLocation } from "react-router-dom";
 import CardLayout from "../../components/layout/CardLayout";
