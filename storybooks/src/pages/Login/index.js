@@ -109,9 +109,9 @@ const Login = () => {
             </div>
             <div style={{ display: "flex", flex: 1 }}>
               <div style={{ flexDirection: "row", display: "flex" }}>
-                <p>Not a member?</p>
+                <p style={{ fontWeight: 200, fontSize: 14 }}>Not a member?</p>
                 <a
-                  style={{ color: "#0076C2" }}
+                  style={{ fontWeight: 400, fontSize: 14, color: "#0076C2" }}
                   onClick={() => history.push("/register")}
                 >
                   Sign up now

@@ -13,7 +13,7 @@ export default ({ children, topic }) => {
         borderRadius: 3,
         backgroundColor: "#ffffff",
         flexDirection: "column",
-        width: 440,
+        width: 460,
       }}
     >
       <div
